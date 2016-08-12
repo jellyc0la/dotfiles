@@ -1,0 +1,136 @@
+set nocompatible       " Don't care about vi compat
+
+" Setup Vundle to manage my bundles
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'gmarik/vundle'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle 'tpope/vim-fugitive'
+Plugin 'kien/ctrlp.vim'
+Plugin 'chriskempson/base16-vim'
+Plugin 'nvie/vim-flake8'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-surround'
+Bundle 'tpope/vim-commentary'
+Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'hynek/vim-python-pep8-indent'
+
+filetype plugin indent on " required
+syntax on
+
+inoremap jk <Esc>
+
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+noremap <Del> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+
+nnoremap j gj
+nnoremap k gk
+
+let mapleader=","
+nnoremap <leader>i mmgg=G`m<CR>
+
+inoremap <C-U> <C-G>u<C-U>
+
+set encoding=utf-8
+set gdefault
+set autoindent
+set showcmd
+set nowrap
+set nrformats-=octal
+set ttimeout
+set ttimeoutlen=100
+set ruler
+set wildmenu
+set expandtab
+set backspace=indent,eol,start
+set scrolloff=4
+set secure
+set lazyredraw
+set complete-=i
+set smarttab
+set autoread
+set autochdir
+set cursorline
+set showmatch
+set relativenumber
+set number
+set splitbelow
+set splitright
+set clipboard=unnamed
+syntax enable
+
+" better search
+set incsearch                   " incremental searching
+set hlsearch                    " highlight matches
+set ignorecase                  " searches are case insensitive...
+set smartcase                   " ... unless they contain at least one capital letter
+noremap <leader><space> :nohlsearch<CR> " for removing search highlight
+
+let python_highight_all=1
+
+au BufNewFile,BufRead *.py
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set fileformat=unix |
+    \ set colorcolumn=80 |
+    \ highlight ColorColumn ctermbg=8
+
+autocmd BufWritePost *.py call Flake8()
+
+au BufNewFile,BufRead *.rb,*.js,*.html,*.css
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
+
+" Colors
+let base16colorspace=256
+colorscheme base16-default-dark
+
+" popup colors
+if has ('gui_running')
+    highlight Pmenu guibg=#cccccc gui=bold
+endif
+set t_Co=256
+set background=dark
+
+" better display for :set list
+if &listchars ==# 'eol:$'
+  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+endif
+
+" For powerline
+set guifont=Inconsolata\ for\ Powerline:h15
+set laststatus=2
+
+" Allow bracketed paste mode.
+if &term =~ "xterm.*"
+    let &t_ti = &t_ti . "\e[?2004h"
+    let &t_te = "\e[?2004l" . &t_te
+    function XTermPasteBegin(ret)
+        set pastetoggle=<Esc>[201~
+        set paste
+        return a:ret
+    endfunction
+    map <expr> <Esc>[200~ XTermPasteBegin("i")
+    imap <expr> <Esc>[200~ XTermPasteBegin("")
+    vmap <expr> <Esc>[200~ XTermPasteBegin("c")
+    cmap <Esc>[200~ <nop>
+    cmap <Esc>[201~ <nop>
+endif
+
+" Put all the swap files in the same place
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swp//
