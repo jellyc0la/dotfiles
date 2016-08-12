@@ -9,7 +9,7 @@ export EDITOR=$VISUAL
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
-# Stash your environment variables in ~/.localrc.
+# stash  variables in ~/.localrc.
 if [[ -a ~/.localrc ]]
 then
   source ~/.localrc
@@ -39,4 +39,3 @@ do
 done
 
 unset config_files
-
