@@ -25,6 +25,7 @@ brew 'postgres', restart_service: true
 brew 'redis', restart_service: true
 brew 'reattach-to-user-namespace'
 brew 'qt'
+brew 'grc'
 
 cask '1password'
 cask 'google-chrome'
