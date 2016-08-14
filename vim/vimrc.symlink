@@ -17,6 +17,7 @@ Plugin 'tpope/vim-surround'
 Bundle 'tpope/vim-commentary'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'hynek/vim-python-pep8-indent'
+Plugin 'christoomey/vim-tmux-navigator'
 
 filetype plugin indent on " required
 syntax on
@@ -89,6 +90,9 @@ au BufNewFile,BufRead *.py
     \ highlight ColorColumn ctermbg=8
 
 autocmd BufWritePost *.py call Flake8()
+
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
 
 au BufNewFile,BufRead *.rb,*.js,*.html,*.css
     \ set tabstop=2 |
