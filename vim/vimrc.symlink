@@ -28,17 +28,19 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
-noremap <Del> <nop>
+
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
+
 
 nnoremap j gj
 nnoremap k gk
 
 let mapleader=","
 nnoremap <leader>i mmgg=G`m<CR>
+nnoremap <leader>p yyP^Cimport pdb; pdb.set_trace()^[
 
 inoremap <C-U> <C-G>u<C-U>
 
