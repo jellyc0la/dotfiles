@@ -40,7 +40,7 @@ nnoremap k gk
 
 let mapleader=","
 nnoremap <leader>i mmgg=G`m<CR>
-nnoremap <leader>d yyP^Cimport pdb; pdb.set_trace()
+nnoremap <leader>d yyP^Cimport ipdb; ipdb.set_trace()<Esc>
 
 inoremap <C-U> <C-G>u<C-U>
 
