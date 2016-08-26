@@ -7,3 +7,5 @@ alias ev='vim ~/.vimrc'
 
 alias ez='vim ~/.zshrc'
 alias sz='source ~/.zshrc'
+alias k8='cd k8 && workon k8bot'
+alias tree='tree -I "*.pyc"'
