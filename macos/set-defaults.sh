@@ -41,7 +41,7 @@ defaults write com.apple.SoftwareUpdate AutomaticCheckEnabled -bool true
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1
 
 # Reduce fullscreen duration
-defaults write -g NSWindowResizeTime -float 0.003
+defaults write -g NSWindowResizeTime -float 0.001
 
 ## Transmission.app
 # Use `~/Documents/Torrents` to store incomplete downloads
