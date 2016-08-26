@@ -26,6 +26,7 @@ brew 'redis', restart_service: true
 brew 'reattach-to-user-namespace'
 brew 'qt'
 brew 'grc'
+brew 'httpie'
 
 cask '1password'
 cask 'google-chrome'
