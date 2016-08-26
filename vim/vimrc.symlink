@@ -18,7 +18,9 @@ Bundle 'tpope/vim-commentary'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'christoomey/vim-tmux-navigator'
-
+Plugin 'airblade/vim-gitgutter'
+Plugin 'mbbill/undotree'
+Plugin 'mileszs/ack.vim'
 filetype plugin indent on " required
 syntax on
 
@@ -28,21 +30,28 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
+noremap h <nop>
+noremap l <nop>
+
+noremap j <nop>
+noremap k <nop>
 
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
+inoremap <Esc> <nop>
 
-
-nnoremap j gj
-nnoremap k gk
+" nnoremap j gj
+" nnoremap k gk
 
 let mapleader=","
+noremap <leader>a :Ack 
 nnoremap <leader>i mmgg=G`m<CR>
 nnoremap <leader>d yyP^Cimport ipdb; ipdb.set_trace()<Esc>
+nnoremap <leader>w :FixWhitespace<CR>
 
-inoremap <C-U> <C-G>u<C-U>
+nnoremap <leader>u :UndotreeToggle<CR>
 
 set encoding=utf-8
 set gdefault
@@ -65,7 +74,7 @@ set autoread
 set autochdir
 set cursorline
 set showmatch
-set relativenumber
+" set relativenumber
 set number
 set splitbelow
 set splitright
@@ -79,6 +88,23 @@ set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 noremap <leader><space> :nohlsearch<CR> " for removing search highlight
 
+" CtrlP settings
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
+
+if executable('ag')
+  " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
+  " and .agignore. Ignores hidden files by default.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
+else
+  "ctrl+p ignore files in .gitignore
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+endif
+
+let g:ackprg = 'ag --vimgrep'
 let python_highight_all=1
 
 au BufNewFile,BufRead *.py
@@ -96,7 +122,7 @@ autocmd BufWritePost *.py call Flake8()
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-au BufNewFile,BufRead *.rb,*.js,*.html,*.css
+au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
