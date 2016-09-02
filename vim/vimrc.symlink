@@ -21,6 +21,8 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mbbill/undotree'
 Plugin 'mileszs/ack.vim'
+Plugin 'junegunn/goyo.vim'
+Plugin 'junegunn/limelight.vim'
 Plugin 'ervandew/supertab'
 Bundle 'cohama/lexima.vim'
 Bundle 'christoomey/vim-sort-motion'
@@ -130,6 +132,29 @@ au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
+
+
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! s:goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
 
 " Colors
 let base16colorspace=256
