@@ -1,4 +1,5 @@
-# Configuration file for ipython.
+
+#  Configuration file for ipython
 
 #------------------------------------------------------------------------------
 # Configurable configuration
@@ -150,7 +151,7 @@
 
 # If a command or file is given via the command-line, e.g. 'ipython foo.py',
 # start an interactive shell after executing the file or command.
-# c.TerminalIPythonApp.force_interact = False
+c.TerminalIPythonApp.force_interact = False
 
 # Start IPython quickly by skipping the loading of config files.
 # c.TerminalIPythonApp.quick = False
@@ -182,6 +183,8 @@
 
 # Enable magic commands to be called without the leading %.
 # c.InteractiveShell.automagic = True
+c.InteractiveShellApp.exec_lines = ['%autoreload 2']
+c.InteractiveShellApp.extensions = ['autoreload']
 
 # The part of the banner to be printed before the profile
 # c.InteractiveShell.banner1 = 'Python 2.7.12 (default, Jun 29 2016, 14:05:02) \nType "copyright", "credits" or "license" for more information.\n\nIPython 5.0.0 -- An enhanced Interactive Python.\n?         -> Introduction and overview of IPython\'s features.\n%quickref -> Quick reference.\nhelp      -> Python\'s own help system.\nobject?   -> Details about \'object\', use \'object??\' for extra details.\n'
@@ -203,7 +206,7 @@
 c.InteractiveShell.color_info = True
 
 # Set the color scheme (NoColor, Neutral, Linux, or LightBG).
-c.InteractiveShell.colors = 'Neutral'
+c.InteractiveShell.colors = 'Linux'
 
 # c.InteractiveShell.debug = False
 
@@ -254,7 +257,7 @@ c.InteractiveShell.colors = 'Neutral'
 # c.InteractiveShell.object_info_string_level = 0
 
 # Automatically call the pdb debugger after every exception.
-c.InteractiveShell.pdb = False
+c.InteractiveShell.pdb = True
 
 # Deprecated since IPython 4.0 and ignored since 5.0, set
 # TerminalInteractiveShell.prompts object directly.
@@ -315,7 +318,7 @@ c.InteractiveShell.pdb = False
 c.TerminalInteractiveShell.editing_mode = 'vi'
 
 # Set the editor used by IPython (default to $EDITOR/vi/notepad).
-c.TerminalInteractiveShell.editor = 'vi'
+# c.TerminalInteractiveShell.editor = 'vi'
 
 # Highlight matching brackets .
 c.TerminalInteractiveShell.highlight_matching_brackets = True
