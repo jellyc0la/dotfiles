@@ -97,7 +97,8 @@ noremap <leader><space> :nohlsearch<CR> " for removing search highlight
 " CtrlP settings
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'rw'
+
 
 if executable('ag')
   " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
