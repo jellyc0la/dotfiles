@@ -21,6 +21,10 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'mbbill/undotree'
 Plugin 'mileszs/ack.vim'
+Plugin 'ervandew/supertab'
+Bundle 'cohama/lexima.vim'
+Bundle 'christoomey/vim-sort-motion'
+
 filetype plugin indent on " required
 syntax on
 
