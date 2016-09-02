@@ -11,3 +11,13 @@
 [core]
         excludesfile = ~/.gitignore
         editor = vim
+[alias]
+	unstage = reset
+	uncommit = reset --soft HEAD^
+	mup = checkout master && git pull && git checkout -
+[push]
+	default = upstream
+[fetch]
+	prune = true
+[merge]
+	ff = only
