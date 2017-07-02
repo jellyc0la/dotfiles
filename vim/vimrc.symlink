@@ -7,25 +7,30 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle 'christoomey/vim-sort-motion'
+Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-fugitive'
-Plugin 'kien/ctrlp.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'SirVer/ultisnips'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'chriskempson/base16-vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'dhruvasagar/vim-table-mode'
+Plugin 'ervandew/supertab'
+Plugin 'fatih/vim-go'
+Plugin 'honza/vim-snippets'
+Plugin 'jpalardy/vim-slime'
+Plugin 'kien/ctrlp.vim'
+Plugin 'mbbill/undotree'
+Plugin 'mileszs/ack.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Bundle 'tpope/vim-commentary'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'mbbill/undotree'
-Plugin 'mileszs/ack.vim'
-Plugin 'junegunn/goyo.vim'
-Plugin 'junegunn/limelight.vim'
-Plugin 'ervandew/supertab'
-Bundle 'cohama/lexima.vim'
-Bundle 'christoomey/vim-sort-motion'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'w0rp/ale'
 
 filetype plugin indent on " required
 syntax on
@@ -36,32 +41,29 @@ noremap <Up> <nop>
 noremap <Down> <nop>
 noremap <Left> <nop>
 noremap <Right> <nop>
-noremap h <nop>
-noremap l <nop>
 
-noremap j <nop>
-noremap k <nop>
+noremap <BS> <nop>
+noremap <Del> <nop>
 
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <Left> <nop>
 inoremap <Right> <nop>
 inoremap <Esc> <nop>
-
-" nnoremap j gj
-" nnoremap k gk
-
+inoremap <Del> <nop>
 let mapleader=","
-noremap <leader>a :Ack 
-nnoremap <leader>i mmgg=G`m<CR>
-nnoremap <leader>d yyP^Cimport ipdb; ipdb.set_trace()<Esc>
-nnoremap <leader>w :FixWhitespace<CR>
+noremap \ ,
 
+noremap <leader>a :Ack
+nnoremap <leader>i mmgg=G`m<CR>
+nnoremap <leader>w :FixWhitespace<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <leader>f :ALEFix<CR>
 
 set encoding=utf-8
 set gdefault
 set autoindent
+set autowrite "go
 set showcmd
 set nowrap
 set nrformats-=octal
@@ -80,7 +82,7 @@ set autoread
 set autochdir
 set cursorline
 set showmatch
-" set relativenumber
+set relativenumber
 set number
 set splitbelow
 set splitright
@@ -93,6 +95,20 @@ set hlsearch                    " highlight matches
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 noremap <leader><space> :nohlsearch<CR> " for removing search highlight
+
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+
+let g:ale_fixers = {
+\   'python': ['yapf'],
+\}
+
+let g:ale_sign_column_always = 1
+
+" Slime
+let g:slime_target = "tmux"
+let g:slime_python_ipython = 1
 
 " CtrlP settings
 let g:ctrlp_match_window = 'bottom,order:ttb'
@@ -111,10 +127,14 @@ else
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 endif
 
-let g:ackprg = 'ag --vimgrep'
-let python_highight_all=1
 
-au BufNewFile,BufRead *.py
+let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabClosePreviewOnPopupClose = 1
+let g:ackprg = 'ag --vimgrep'
+let g:jedi#popup_on_dot = 0
+let python_highlight_all = 1
+
+au BufNewFile,BufRead *.py,*.m
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
@@ -124,7 +144,19 @@ au BufNewFile,BufRead *.py
     \ set colorcolumn=80 |
     \ highlight ColorColumn ctermbg=8
 
-autocmd BufWritePost *.py call Flake8()
+au FileType python nnoremap <leader>i yyP^Cimport ipdb; ipdb.set_trace()<Esc>
+
+" Golang
+au BufNewFile,BufRead *go
+        \ set tabstop=4 |
+        \ set shiftwidth=4
+
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>d <Plug>(go-info)
+let g:go_metalinter_autosave = 1
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
@@ -134,28 +166,9 @@ au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh
     \ set softtabstop=2 |
     \ set shiftwidth=2
 
-
-function! s:goyo_enter()
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-
-function! s:goyo_leave()
-  " Quit Vim if this is the only remaining buffer
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-endfunction
-
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " Colors
 let base16colorspace=256
@@ -173,9 +186,11 @@ if &listchars ==# 'eol:$'
   set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
 
-" For powerline
-set guifont=Inconsolata\ for\ Powerline:h15
 set laststatus=2
+" For powerline
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#ale#enabled = 1
+set guifont=Inconsolata\ for\ Powerline:h15
 
 " Allow bracketed paste mode.
 if &term =~ "xterm.*"
