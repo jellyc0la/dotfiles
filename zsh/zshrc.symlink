@@ -3,7 +3,6 @@ export LC_ALL=en_CA.UTF-8
 
 export ZSH=$HOME/.dotfiles
 export PROJECTS=~/Projects
-
 export VISUAL='vim'
 export EDITOR=$VISUAL
 export PAGER=LESS
@@ -11,11 +10,15 @@ export LESS=-r
 
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+
+export GOPATH=$HOME/skool/416/goplay
+export PATH=$PATH:$GOPATH/bin
+
 
 autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
 zle -N up-line-or-beginning-search
 zle -N down-line-or-beginning-search
+
 
 [[ -n "${key[Up]}"   ]] && bindkey "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey "${key[Down]}" down-line-or-beginning-search
@@ -43,10 +46,10 @@ done
 autoload -U compinit
 compinit
 
-# load every completion after autocomplete loads
 for file in ${(M)config_files:#*/completion.zsh}
 do
   source $file
 done
 
+eval "$(fasd --init auto)"
 unset config_files
