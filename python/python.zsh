@@ -1,5 +1,4 @@
-export WORKON_HOME=~/Envs
-source /usr/local/bin/virtualenvwrapper.sh
+eval "$(pyenv init -)"
 
 # Serve the current directory. Pass in a port, or use default 8000
 function simple-server() {
