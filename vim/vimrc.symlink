@@ -22,7 +22,7 @@ Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
 Plugin 'honza/vim-snippets'
 Plugin 'jpalardy/vim-slime'
-Plugin 'kien/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'mbbill/undotree'
 Plugin 'mileszs/ack.vim'
 Plugin 'nvie/vim-flake8'
@@ -31,6 +31,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'w0rp/ale'
+Plugin 'junegunn/goyo.vim'
 
 filetype plugin indent on " required
 syntax on
@@ -96,8 +97,10 @@ set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
 noremap <leader><space> :nohlsearch<CR> " for removing search highlight
 
+
+let g:ale_lint_on_text_changed = 'always'
 let g:ale_linters = {
-\   'python': ['flake8'],
+\   'python': ['mypy', 'pylint'],
 \}
 
 let g:ale_fixers = {
@@ -108,7 +111,9 @@ let g:ale_sign_column_always = 1
 
 " Slime
 let g:slime_target = "tmux"
+let g:slime_paste_file = "$HOME/.slime_paste"
 let g:slime_python_ipython = 1
+let g:slime_default_config = {"socket_name": "default", "target_pane": "%1"}
 
 " CtrlP settings
 let g:ctrlp_match_window = 'bottom,order:ttb'
@@ -116,17 +121,12 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 'rw'
 
 
-if executable('ag')
-  " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-  set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
-  " and .agignore. Ignores hidden files by default.
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
-else
-  "ctrl+p ignore files in .gitignore
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+if executable('rg')
+  set grepprg=rg\ --color=never
+  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+  let g:ctrlp_use_caching = 0
 endif
-
+set wildignore+=*/.git/*,*/tmp/*,*.swp
 
 let g:SuperTabDefaultCompletionType = 'context'
 let g:SuperTabClosePreviewOnPopupClose = 1
@@ -138,10 +138,10 @@ au BufNewFile,BufRead *.py,*.m
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
-    \ set textwidth=79 |
+    \ set textwidth=119 |
     \ set expandtab |
     \ set fileformat=unix |
-    \ set colorcolumn=80 |
+    \ set colorcolumn=120 |
     \ highlight ColorColumn ctermbg=8
 
 au FileType python nnoremap <leader>i yyP^Cimport ipdb; ipdb.set_trace()<Esc>
@@ -161,7 +161,7 @@ let g:go_metalinter_autosave = 1
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh
+au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh,*.yml
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
