@@ -1,40 +1,94 @@
 set nocompatible       " Don't care about vi compat
 
-" Setup Vundle to manage my bundles
-filetype off
+set nobackup
+set nowritebackup
+set noswapfile
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
-Bundle 'gmarik/vundle'
-Bundle 'christoomey/vim-sort-motion'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-fugitive'
-Plugin 'Raimondi/delimitMate'
-Plugin 'SirVer/ultisnips'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'chriskempson/base16-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'dhruvasagar/vim-table-mode'
-Plugin 'ervandew/supertab'
-Plugin 'fatih/vim-go'
-Plugin 'honza/vim-snippets'
-Plugin 'jpalardy/vim-slime'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'mbbill/undotree'
-Plugin 'mileszs/ack.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'w0rp/ale'
-Plugin 'junegunn/goyo.vim'
+" Visuals
+Plug 'chriskempson/base16-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'trevordmiller/nova-vim'
 
-filetype plugin indent on " required
-syntax on
+" CSS
+Plug 'ap/vim-css-color'
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+
+" HTML
+Plug 'othree/html5.vim',                  { 'for': 'html' }
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'mattn/emmet-vim'
+Plug 'Shougo/context_filetype.vim'
+
+" Project
+Plug 'junegunn/fzf',                      { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'mhinz/vim-grepper'
+Plug 'scrooloose/nerdtree'
+Plug 'majutsushi/tagbar'
+Plug 'vim-scripts/ctags.vim'
+Plug 'haya14busa/incsearch.vim'
+Plug 'vim-scripts/matchit.zip'
+
+" Tmux
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'jpalardy/vim-slime'
+Plug 'wincent/terminus'
+
+" Editing
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'christoomey/vim-sort-motion'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+
+" Autocomplete
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+
+" Javascript
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'carlitux/deoplete-ternjs', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/jspc.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'HerringtonDarkholme/yats.vim'
+
+" Python
+Plug 'davidhalter/jedi-vim',  { 'for': 'python' }
+Plug 'zchee/deoplete-jedi',  { 'for': 'python' }
+
+" Markdown
+Plug 'reedes/vim-pencil'
+Plug 'junegunn/goyo.vim'
+Plug 'godlygeek/tabular',                 { 'for': 'markdown' }
+Plug 'plasticboy/vim-markdown',           { 'for': 'markdown' }
+
+" Linting
+Plug 'nvie/vim-flake8'
+Plug 'w0rp/ale'
+
+" Misc
+Plug 'mbbill/undotree'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-dispatch'
+Plug 'janko-m/vim-test'
+Plug 'metakirby5/codi.vim'
+
+call plug#end()
 
 inoremap jk <Esc>
 
@@ -52,25 +106,36 @@ inoremap <Left> <nop>
 inoremap <Right> <nop>
 inoremap <Esc> <nop>
 inoremap <Del> <nop>
+
 let mapleader=","
 noremap \ ,
 
-noremap <leader>a :Ack
 nnoremap <leader>i mmgg=G`m<CR>
 nnoremap <leader>w :FixWhitespace<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>f :ALEFix<CR>
 
+noremap <Leader>n :NERDTreeToggle<cr>
+noremap <leader>i gg=G''
+noremap <leader>n :NERDTreeToggle<cr>
+noremap <leader>t :TagbarToggle<cr>
+
+let NERDTreeIgnore = [
+                        \'^node_modules[[dir]]'
+                        \]
+
+
 set encoding=utf-8
+set shell=zsh
+set ruler
 set gdefault
 set autoindent
-set autowrite "go
 set showcmd
 set nowrap
 set nrformats-=octal
 set ttimeout
-set ttimeoutlen=100
-set ruler
+set ttimeoutlen=1000
+set ttimeoutlen=0
 set wildmenu
 set expandtab
 set backspace=indent,eol,start
@@ -82,7 +147,8 @@ set smarttab
 set autoread
 set autochdir
 set cursorline
-set showmatch
+
+"set showmatch
 set relativenumber
 set number
 set splitbelow
@@ -95,19 +161,79 @@ set incsearch                   " incremental searching
 set hlsearch                    " highlight matches
 set ignorecase                  " searches are case insensitive...
 set smartcase                   " ... unless they contain at least one capital letter
-noremap <leader><space> :nohlsearch<CR> " for removing search highlight
 
 
-let g:ale_lint_on_text_changed = 'always'
+let g:deoplete#enable_at_startup = 1
+let deoplete#auto_complete_start_length = 1
+
+let g:deoplete#omni#functions = {}
+let g:deoplete#omni#functions.javascript = [
+                        \ 'tern#Complete',
+                        \ 'jspc#omni'
+                        \]
+
+set completeopt=longest,menuone,preview
+let g:deoplete#sources = {}
+let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+let g:deoplete#sources#ternjs#types = 1
+let g:tern#command = ['tern']
+let g:tern#arguments = ['--persistent']
+
+autocmd FileType javascript nnoremap <S-k> :TernDoc<CR>
+let g:tern_show_argument_hints = 'on_move'
+
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+
+augroup VimCSS3Syntax
+  autocmd!
+
+  autocmd FileType css setlocal iskeyword+=-
+augroup END
+
+
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
+let g:UltiSnipsExpandTrigger="<C-k>"
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" Ale
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_linters = {
-\   'python': ['mypy', 'pylint'],
-\}
+                        \   'python': ['mypy', 'pylint'],
+                        \   'javascript': ['eslint', 'flow'],
+                        \   'css': ['stylelint'],
+                        \   'scss': ['stylelint'],
+                        \   'glsl': ['glslang'],
+                        \   'html': ['htmlhint'],
+                        \   'json': ['jsonlint'],
+                        \   'yaml': ['yamllint'],
+                        \   'sql': ['sqlint'],
+                        \   'dockerfile': ['hadolint'],
+                        \   'markdown': ['mdl', 'proselint'],
+                        \   'c': ['clang'],
+                        \   'bash': ['shellcheck']
+                        \}
 
 let g:ale_fixers = {
-\   'python': ['yapf'],
-\}
-
+                        \   'python': ['yapf'],
+                        \   'javascript': ['eslint'],
+                        \   'scss': ['prettier'],
+                        \   'css': ['stylelint'],
+                        \   'html': ['tidy'],
+                        \   'json': ['prettier']
+                        \}
 let g:ale_sign_column_always = 1
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
 
 " Slime
 let g:slime_target = "tmux"
@@ -115,84 +241,79 @@ let g:slime_paste_file = "$HOME/.slime_paste"
 let g:slime_python_ipython = 1
 let g:slime_default_config = {"socket_name": "default", "target_pane": "%1"}
 
-" CtrlP settings
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 'rw'
-
-
-if executable('rg')
-  set grepprg=rg\ --color=never
-  let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
-  let g:ctrlp_use_caching = 0
+" Grepping
+if executable('ag')
+        set grepprg=ag\ --nogroup\ --nocolor
+        command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 endif
-set wildignore+=*/.git/*,*/tmp/*,*.swp
+let g:grepper = {
+                        \ 'tools': ['rg', 'git', 'ag'],
+                        \ }
 
-let g:SuperTabDefaultCompletionType = 'context'
-let g:SuperTabClosePreviewOnPopupClose = 1
-let g:ackprg = 'ag --vimgrep'
-let g:jedi#popup_on_dot = 0
-let python_highlight_all = 1
+command! -nargs=* -complete=file Rg Grepper -noprompt -tool rg -query <args>
+
+
+augroup pencil
+        autocmd!
+        autocmd FileType markdown,mkd,md,text call pencil#init({'wrap': 'soft'})
+augroup END
+
+
 
 au BufNewFile,BufRead *.py,*.m
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=119 |
-    \ set expandtab |
-    \ set fileformat=unix |
-    \ set colorcolumn=120 |
-    \ highlight ColorColumn ctermbg=8
-
-au FileType python nnoremap <leader>i yyP^Cimport ipdb; ipdb.set_trace()<Esc>
-
-" Golang
-au BufNewFile,BufRead *go
-        \ set tabstop=4 |
-        \ set shiftwidth=4
-
-au FileType go nmap <leader>r <Plug>(go-run)
-au FileType go nmap <leader>b <Plug>(go-build)
-au FileType go nmap <leader>t <Plug>(go-test)
-au FileType go nmap <leader>c <Plug>(go-coverage)
-au FileType go nmap <Leader>d <Plug>(go-info)
-let g:go_metalinter_autosave = 1
+                        \ set tabstop=4 |
+                        \ set softtabstop=4 |
+                        \ set shiftwidth=4 |
+                        \ set textwidth=119 |
+                        \ set expandtab |
+                        \ set fileformat=unix |
+                        \ set colorcolumn=120 |
+                        \ highlight ColorColumn ctermbg=8
 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh,*.yml
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2
+" Testing
+let test#strategy = "dispatch"
+nmap <silent> t<C-n> :TestNearest<CR> " t Ctrl+n
+nmap <silent> t<C-f> :TestFile<CR>    " t Ctrl+f
+nmap <silent> t<C-s> :TestSuite<CR>   " t Ctrl+s
+nmap <silent> t<C-l> :TestLast<CR>    " t Ctrl+l
+nmap <silent> t<C-g> :TestVisit<CR>   " t Ctrl+g
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+au BufRead,BufNewFile .eslintrc,.jscsrc,.jshintrc,.babelrc set ft=json
+au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh,*.yml,*.hs,*.scss
+                        \ set tabstop=2 |
+                        \ set softtabstop=2 |
+                        \ set shiftwidth=2
 
-" Colors
+
 let base16colorspace=256
 colorscheme base16-default-dark
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Plus\ Nerd\ File\ Types:h11
 
 " popup colors
 if has ('gui_running')
-    highlight Pmenu guibg=#cccccc gui=bold
+        highlight Pmenu guibg=#cccccc gui=bold
 endif
 set t_Co=256
 set background=dark
 
 " better display for :set list
 if &listchars ==# 'eol:$'
-  set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
+        set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 endif
+
 
 set laststatus=2
 " For powerline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
-set guifont=Inconsolata\ for\ Powerline:h15
+let g:airline_skip_empty_sections = 1
 
-" Allow bracketed paste mode.
+
+"" Allow bracketed paste mode.
+
 if &term =~ "xterm.*"
     let &t_ti = &t_ti . "\e[?2004h"
     let &t_te = "\e[?2004l" . &t_te
@@ -208,6 +329,26 @@ if &term =~ "xterm.*"
     cmap <Esc>[201~ <nop>
 endif
 
-" Put all the swap files in the same place
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swp//
+" Goyo
+function! s:goyo_enter()
+        if exists('$TMUX')
+                silent !tmux set status off
+        endif
+endfunction
+
+function! s:goyo_leave()
+        if exists('$TMUX')
+                silent !tmux set status on
+        endif
+endfunction
+
+autocmd User GoyoEnter nested call <SID>goyo_enter()
+autocmd User GoyoLeave nested call <SID>goyo_leave()
+
+" Insert mode remaps
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+
+" Search for tasks across the current project
+nnoremap <C-p> :Files<cr>

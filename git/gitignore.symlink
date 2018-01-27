@@ -1,3 +1,11 @@
 .DS_Store
+Desktop.ini
 *~
 *.swp
+*.pyc
+node_modules
+npm-debug.log
+.Spotlight-V100
+.Trashes
+._*
+Thumbs.db

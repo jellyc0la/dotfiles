@@ -4,8 +4,11 @@ alias mkdir='mkdir -p'
 alias dtf="cd ~/.dotfiles"
 
 alias ev='vim ~/.vimrc'
+alias bs="browser-sync start --server --files '**/*.css, **/*.html, **/*.js, !node_modules/**/*' --directory --port 7777 --browser 'Firefox'"
 
 alias ez='vim ~/.zshrc'
 alias sz='source ~/.zshrc'
-alias k8='cd k8 && workon k8bot'
-alias tree='tree -I "*.pyc"'
+alias tree='tree'
+
+alias paths='echo $PATH | tr \: \\n'
+alias note='touch $(date "+%Y_%m_%d.md")'

@@ -11,28 +11,8 @@ export LESS=-r
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export PATH="$HOME/Library/Haskell/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 export GOPATH=$HOME/skool/416/goplay
 export PATH=$PATH:$GOPATH/bin
