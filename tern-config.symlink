@@ -1,0 +1,11 @@
+{
+  "libs": [
+    "browser",
+    "ecmascript"
+  ],
+  "plugins": {
+    "node": {},
+    "es_modules": {}
+  },
+  "ecmaVersion": 7
+}
