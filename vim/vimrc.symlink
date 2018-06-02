@@ -216,7 +216,7 @@ autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>"
 let g:UltiSnipsExpandTrigger="<C-k>"
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
-let g:SuperTabClosePreviewOnPopupClose = 1
+let g:SuperTabClosePreviewOnPopupClose = 0
 
 " Linting
 "let g:ale_lint_on_text_changed = 'never'
@@ -248,6 +248,8 @@ let g:ale_fixers = {
       \}
 
 let g:ale_sign_column_always = 1
+let g:ale_sign_error = '-'
+let g:ale_sign_warning = '>'
 
 nmap ]l :ALENextWrap<CR>
 nmap [l :ALEPreviousWrap<CR>
