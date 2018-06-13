@@ -244,7 +244,8 @@ let g:ale_fixers = {
       \   'css': ['stylelint'],
       \   'ruby': ['rubocop'],
       \   'html': ['tidy'],
-      \   'json': ['prettier']
+      \   'json': ['prettier'],
+      \   'bash': ['shfmt']
       \}
 
 let g:ale_sign_column_always = 1
