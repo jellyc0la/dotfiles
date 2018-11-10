@@ -173,7 +173,7 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-let g:incsearch#auto_nohlsearch = 1
+let g:incsearch#auto_nohlsearch = 2
 map n  <Plug>(incsearch-nohl-n)
 map N  <Plug>(incsearch-nohl-N)
 map *  <Plug>(incsearch-nohl-*)
@@ -219,7 +219,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 let g:SuperTabClosePreviewOnPopupClose = 0
 
 " Linting
-"let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_linters = {
       \   'python': ['mypy', 'pylint'],
       \   'javascript': ['eslint', 'flow'],
@@ -255,7 +255,6 @@ let g:ale_sign_warning = '>'
 nmap ]l :ALENextWrap<CR>
 nmap [l :ALEPreviousWrap<CR>
 
-
 " Slime
 let g:slime_target = "tmux"
 let g:slime_paste_file = "$HOME/.slime_paste"
@@ -282,8 +281,6 @@ augroup pencil
   autocmd!
   autocmd FileType markdown,mkd,md,text call pencil#init({'wrap': 'soft'})
 augroup END
-
-
 
 " Testing
 let test#strategy = "dispatch"
@@ -314,12 +311,10 @@ set laststatus=2
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-
 " powerline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline_skip_empty_sections = 1
-
 
 "" Allow bracketed paste mode.
 if &term =~ "xterm.*"
