@@ -5,13 +5,14 @@
         diff = auto
         status = auto
         branch = auto
-        ui = true
+	ui = true
         interactive = auto
         grep = auto
         showBranch = auto
 [core]
         excludesfile = ~/.gitignore
         editor = vim
+        pager = "diff-so-fancy | less --tabs=4 -RFX"
 [alias]
 	unstage = reset
 	uncommit = reset --soft HEAD^
@@ -24,3 +25,15 @@
 	ff = only
 [github]
         user = jellyc0la
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
