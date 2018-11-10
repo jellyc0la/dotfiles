@@ -19,9 +19,10 @@
       "prettier/react"
     ],
     "rules": {
-      "quotes": "off",
+      "quotes": ["error", "single"],
       "func-names": 0,
       "no-console": 0,
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
       "no-debugger": 0,
       "radix": 0,
       "no-unused-vars": 1,
@@ -31,6 +32,7 @@
       "prettier/prettier": ["error", {
         "printWidth": 120,
         "semi": false,
+        "singleQuote": true,
       }]
     },
     "env": {
