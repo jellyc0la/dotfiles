@@ -1,5 +1,6 @@
 alias :q='exit'
-alias ls="ls -lAh"
+#alias ls="ls -lAh"
+alias  ls="exa -lah"
 alias mkdir='mkdir -p'
 alias dtf="cd ~/.dotfiles"
 
@@ -8,7 +9,9 @@ alias bs="browser-sync start --server --files '**/*.css, **/*.html, **/*.js, !no
 
 alias ez='vim ~/.zshrc'
 alias sz='source ~/.zshrc'
-alias tree='tree'
 
 alias paths='echo $PATH | tr \: \\n'
 alias note='touch $(date "+%Y_%m_%d.md")'
+
+alias cat='bat'
+alias ls="exa -lah"
