@@ -11,7 +11,6 @@ export LESS=-r
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
 
-export PATH="$HOME/Library/Haskell/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 
@@ -65,5 +64,5 @@ export FZF_DEFAULT_OPTS='
 --color info:108,prompt:109,spinner:108,pointer:168,marker:168
 '
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+export GOPATH=$HOME/code/go
+export PATH=$PATH:$GOPATH/bin
