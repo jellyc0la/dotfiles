@@ -3,8 +3,11 @@ Desktop.ini
 *~
 *.swp
 *.pyc
+.tern-port
+tmp
 node_modules
 npm-debug.log
+yarn-error.log
 .Spotlight-V100
 .Trashes
 ._*
