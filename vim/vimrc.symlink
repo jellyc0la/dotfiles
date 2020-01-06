@@ -5,6 +5,7 @@ set nowritebackup
 set noswapfile
 set updatetime=300
 set shortmess+=c
+set cmdheight=2
 
 syntax enable
 
@@ -42,9 +43,6 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-" Autocomplete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'Shougo/echodoc.vim'
 
 " Linting
 Plug 'nvie/vim-flake8'
@@ -74,6 +72,10 @@ Plug 'reedes/vim-pencil'
 Plug 'godlygeek/tabular',                 { 'for': 'markdown' }
 Plug 'plasticboy/vim-markdown',           { 'for': 'markdown' }
 
+" Autocomplete
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'Shougo/echodoc.vim'
+
 " Misc
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
@@ -96,10 +98,15 @@ nnoremap <leader>w :FixWhitespace<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>f :ALEFix<CR>
 
-let g:echodoc_enable_at_startup = 1
+"let g:echodoc_enable_at_startup = 1
 
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+let g:go_def_mapping_enabled = 0
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 nnoremap <leader>x :cclose<CR>
 map <leader>n :cnext<CR>
@@ -187,6 +194,11 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " Coc only does snippet and additional edit on confirm.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 set completeopt=longest,menuone,preview
 
