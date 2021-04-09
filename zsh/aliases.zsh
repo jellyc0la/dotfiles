@@ -15,3 +15,5 @@ alias note='touch $(date "+%Y_%m_%d.md")'
 
 alias cat='bat'
 alias ls="exa -lah"
+
+alias nvmn='[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
