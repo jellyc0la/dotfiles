@@ -40,16 +40,13 @@ Plug 'tpope/vim-unimpaired'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 " Git
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
-
 " Linting
-Plug 'nvie/vim-flake8'
 Plug 'w0rp/ale'
 
 " CSS
-Plug 'ap/vim-css-color'
+Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 
 " HTML
@@ -62,26 +59,22 @@ Plug 'Valloric/MatchTagAlways'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'jparise/vim-graphql'
 
 " Go
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-" Markdown
-Plug 'reedes/vim-pencil'
-Plug 'godlygeek/tabular',                 { 'for': 'markdown' }
-Plug 'plasticboy/vim-markdown',           { 'for': 'markdown' }
-
 " Autocomplete
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/echodoc.vim'
 
 " Misc
 Plug 'mbbill/undotree'
 Plug 'sheerun/vim-polyglot'
-Plug 'metakirby5/codi.vim'
-Plug 'tpope/vim-dispatch'
 Plug 'janko-m/vim-test'
+
+" Markdown
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 
 call plug#end()
 
@@ -99,6 +92,7 @@ nnoremap <leader>u :UndotreeToggle<CR>
 nnoremap <leader>f :ALEFix<CR>
 
 "let g:echodoc_enable_at_startup = 1
+"
 
 autocmd FileType go nmap <leader>b  <Plug>(go-build)
 autocmd FileType go nmap <leader>r  <Plug>(go-run)
@@ -146,7 +140,7 @@ set splitbelow
 set splitright
 set ttimeout
 set ttimeoutlen=0
-set ttimeoutlen=1000
+set timeoutlen=1000
 set wildmenu
 set tabstop=2
 set shiftwidth=2
@@ -204,6 +198,10 @@ set completeopt=longest,menuone,preview
 
 let g:go_code_completion_enabled = 0
 
+let g:go_highlight_structs = 0
+let g:go_highlight_interfaces = 0
+let g:go_highlight_operators = 0
+
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
 
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -236,6 +234,8 @@ let g:ale_linters = {
 let g:ale_fixers = {
       \   'python': ['yapf'],
       \   'javascript': ['eslint'],
+      \   'typescript': ['eslint'],
+      \   'typescriptreact': ['eslint'],
       \   'scss': ['prettier'],
       \   'css': ['stylelint'],
       \   'ruby': ['rubocop'],
@@ -331,17 +331,6 @@ let g:fzf_colors = {
       \   'marker':  ['fg', 'MatchParen']
       \ }
 
-" Python
-au BufNewFile,BufRead *.py,*.m
-      \ set tabstop=4 |
-      \ set softtabstop=4 |
-      \ set shiftwidth=4 |
-      \ set textwidth=119 |
-      \ set expandtab |
-      \ set fileformat=unix |
-      \ set colorcolumn=120 |
-      \ highlight ColorColumn ctermbg=8
-
 " General Indent
 au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh,*.yml,*.hs,*.scss
       \ set tabstop=2 |
@@ -350,3 +339,15 @@ au BufNewFile,BufRead *.rb,*.js,*.html,*.css,*.sh,*.zsh,*.yml,*.hs,*.scss
 
 au BufRead,BufNewFile .eslintrc,.jscsrc,.jshintrc,.babelrc,.stylelintrc
   \ set ft=json
+
+augroup Markdown
+  autocmd!
+  autocmd FileType markdown set wrap
+  autocmd FileType markdown set lbr
+augroup END
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+autocmd! User GoyoEnter nested set eventignore=FocusGained
+autocmd! User GoyoLeave nested set eventignore=
